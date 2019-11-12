@@ -1,65 +1,67 @@
 <?php
 
 namespace App;
+
 use AltoRouter;
 use Dispatcher;
- 
-class Application {
 
-  private $router;
-  private $controllerNamespace;
+class Application
+{
 
-  /**
-   * @var \App\Application
-   */
-  private static $_instance;
+    private $router;
+    private $controllerNamespace;
 
-  private function __construct()
-  {
-    // On charge la conf
-    $configData = parse_ini_file(__DIR__.'/config.ini');
-    // On récupère le namespace des Controllers
-    $this->controllersNamespace = $configData['CONTROLLERS_NAMESPACE'];
-    $controllersNamespace = $this->controllersNamespace;
+    /**
+     * @var \App\Application
+     */
+    private static $_instance;
 
-    $this->router = new AltoRouter();
-    $this->router->setBasePath($_SERVER['BASE_URI']);
-    $this->controllerNamespace = $configData['CONTROLLERS_NAMESPACE'];
-    // on va définir dans un fichier à part, nos routes
-    // pratique comme ça Application.php est générique, donc réutilisable de projet en projet
-    // et routes.php est spécifique au projet 
-    require 'routes.php';
-    
-    $this->router->addRoutes($routes);
-  }
+    private function __construct()
+    {
+        // On charge la conf
+        $configData = parse_ini_file(__DIR__ . '/config.ini');
+        // On récupère le namespace des Controllers
+        $this->controllersNamespace = $configData['CONTROLLERS_NAMESPACE'];
+        $controllersNamespace = $this->controllersNamespace;
 
-  public function run()
-  {
-    $match = $this->router->match();
-    $dispatcher = new Dispatcher($match, $this->controllerNamespace.'ErrorController::notfound');
-    $dispatcher->dispatch();
-  }
+        $this->router = new AltoRouter();
+        $this->router->setBasePath($_SERVER['BASE_URI']);
+        $this->controllerNamespace = $configData['CONTROLLERS_NAMESPACE'];
+        // on va définir dans un fichier à part, nos routes
+        // pratique comme ça Application.php est générique, donc réutilisable de projet en projet
+        // et routes.php est spécifique au projet 
+        require 'routes.php';
 
-  /**
-   * Méthode permettant de récupérer l'unique instance de la classe Application
-   * @return \App\Application
-   */
-  public static function getInstance() : \App\Application
-  {
-    if(empty(self::$_instance)){
-      self::$_instance = new Application();
+        $this->router->addRoutes($routes);
     }
 
-    return self::$_instance;
-  }
+    public function run()
+    {
+        $match = $this->router->match();
+        $dispatcher = new Dispatcher($match, $this->controllerNamespace . 'ErrorController::notfound');
+        $dispatcher->dispatch();
+    }
+
+    /**
+     * Méthode permettant de récupérer l'unique instance de la classe Application
+     * @return \App\Application
+     */
+    public static function getInstance(): \App\Application
+    {
+        if (empty(self::$_instance)) {
+            self::$_instance = new Application();
+        }
+
+        return self::$_instance;
+    }
 
 
 
-  /**
-   * Get the value of router
-   */ 
-  public function getRouter()
-  {
-    return $this->router;
-  }
+    /**
+     * Get the value of router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
 }

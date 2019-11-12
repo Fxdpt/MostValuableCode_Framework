@@ -7,12 +7,11 @@ $routes = [];
 // https://altorouter.com/usage/mapping-routes.html
 // === on ajoute une route
 $routes[] = [
-  'GET',
-  '/',
-  [
-    'controller' => $controllersNamespace.'MainController',
-    'method' => 'home',
-  ],
-  'main-home'
+    'GET',
+    '/',
+    [
+        'controller' => $controllersNamespace . 'MainController',
+        'method' => 'home',
+    ],
+    'main-home'
 ];
-

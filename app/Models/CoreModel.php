@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use PDO;
@@ -7,28 +8,29 @@ use App\Utils\Database;
 /**
  * une classe peut-être abstraite, c'est ç dire qu'elle n'a pas vocation à être instanciée directement, elle a pour vocation d'être étendue.
  */
-abstract class CoreModel {
+abstract class CoreModel
+{
     protected $id;
     protected $created_at;
     protected $updated_at;
-  
+
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
     }
     /**
      * Get the value of created_at
-     */ 
+     */
     public function getCreatedAt()
     {
         return $this->created_at;
     }
     /**
      * Get the value of updated_at
-     */ 
+     */
     public function getUpdatedAt()
     {
         return $this->updated_at;
@@ -39,15 +41,17 @@ abstract class CoreModel {
      *
      * @return void
      */
-    public function save(){
-        if(isset($this->id)){
+    public function save()
+    {
+        if (isset($this->id)) {
             $this->update();
-        }else{
+        } else {
             $this->insert();
         }
     }
 
-    protected static function findModel(int $id, string $tableName, string $fqcn) {
+    protected static function findModel(int $id, string $tableName, string $fqcn)
+    {
         // requete SQL
         $sql = "
             SELECT *
@@ -67,11 +71,6 @@ abstract class CoreModel {
         // La requeête n'a pas encore été exécutée, je le fais
         $pdoStatement->execute();
 
-        // on récupère 1 résultat avec fetchObject sous forme d'objet
-        // avec fetchObject on doit préciser la forme de l'objet qu'on veut
-        // on passe le FQCN en paramètre
-        // soit on passe '\Okanban\Models\ListModel'
-        // soit utilise self::class self fait référence à la classe dans laquelle on écrit / class fait au FQCN
         // $result = $pdoStatement->fetchObject('\Okanban\Models\ListModel');
         // self => la classe dans laquelle on a écrit le mot-clé self
         $result = $pdoStatement->fetchObject($fqcn);
@@ -88,10 +87,8 @@ abstract class CoreModel {
     abstract protected function update();
 
     abstract public function delete();
-    
+
     abstract public static function find(int $id);
-    
+
     abstract public static function findAll();
-
-
 }
