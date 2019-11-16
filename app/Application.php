@@ -23,7 +23,6 @@ class Application
         // On récupère le namespace des Controllers
         $this->controllersNamespace = $configData['CONTROLLERS_NAMESPACE'];
         $controllersNamespace = $this->controllersNamespace;
-
         $this->router = new AltoRouter();
         $this->router->setBasePath($_SERVER['BASE_URI']);
         $this->controllerNamespace = $configData['CONTROLLERS_NAMESPACE'];

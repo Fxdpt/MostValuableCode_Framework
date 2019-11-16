@@ -2,7 +2,9 @@
 
 namespace NamespaceForThisProject\Controllers;
 
-class MainController extends \App\Controllers\CoreController
+use App\Controllers\CoreController;
+
+class MainController extends CoreController
 {
     public function home()
     {

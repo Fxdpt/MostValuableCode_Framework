@@ -15,3 +15,21 @@ $routes[] = [
     ],
     'main-home'
 ];
+
+$routes[] = [
+    'POST',
+    '/signin',
+    [
+        'controller' => $controllersNamespace . 'SecurityController',
+        'method' => 'signInPostAction'
+    ]
+];
+
+$routes[] = [
+    'GET',
+    '/signin',
+    [
+        'controller' => $controllersNamespace . 'SecurityController',
+        'method' => 'signInAction'
+    ]
+];
